@@ -24,7 +24,7 @@ myApp.config( ['$routeProvider',
 	$routeProvider
 		.when('/viewA', { controller: 'SimpleController', templateUrl: 'viewA7.html'})
 		.when('/add', { controller: 'SimpleController', templateUrl: 'add8.html'})
-		.when('/edit', { controller: 'SimpleController', templateUrl: 'edit10.html'})
+		.when('/edit', { controller: 'SimpleController', templateUrl: 'edit12.html'})
 		.when('/viewB', { controller: 'SimpleController', templateUrl: 'viewB7.html'})
 		.otherwise( { redirectTo: '/viewA' });
 }]);
@@ -47,14 +47,23 @@ myApp.controller('SimpleController', function ($scope, simpleFactory) {
 	
 	// behaviour
 	$scope.addPerson = function () {
-		simpleFactory.postPerson({ name: $scope.newPerson.name, city: $scope.newPerson.city});
+		simpleFactory.save({ name: $scope.newPerson.name, city: $scope.newPerson.city});
+		$scope.persons = simpleFactory.query();
 	};
 	
 	$scope.curPerson = function(id) {
 		$scope.selPerson = simpleFactory.get({personId: id}); 
+		$scope.selPersonId = id;
 		// alert('selPerson:' + id);
 		//$scope.selPerson = 
 	};
+	
+	$scope.updatePerson = function(id) {
+		$scope.selPerson.$save({personId: id}, function(data) {
+			alert('person object ' + JSON.stringify(data)  + ' saved!');
+		});
+		$scope.persons = simpleFactory.query();
+	}
 
 });
 	
