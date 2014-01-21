@@ -26,16 +26,35 @@ myApp.config( ['$routeProvider',
 		.otherwise( { redirectTo: '/viewA' });
 }]);
 
-myApp.controller('SimpleController', function ($scope) {
-	// data
-	$scope.persons = [
+myApp.factory( 'simpleFactory', function () {
+	var persons = [
 		{name: 'Barbara', city: 'Cuneo'},
 		{name: 'Antonio', city: 'Torino'},
 		{name: 'Cristina', city: 'Milano'}	
 	];
+	
+	var factory = {};
+	factory.getPersons = function () { return persons; }
+	factory.postPerson = function (p) { persons.push(p); }
+	
+	// return the factory !
+	return factory;
+});
+
+// dependence injection, just put the name of the factory
+myApp.controller('SimpleController', function ($scope, simpleFactory) {
+	$scope.persons = [];
+	
+	init();
+	// private function
+	function init() {
+		// data
+		$scope.persons = simpleFactory.getPersons();
+	};
+	
 	// behaviour
 	$scope.addPerson = function () {
-		$scope.persons.push({ name: $scope.newPerson.name, city: $scope.newPerson.city});
+		simpleFactory.postPerson({ name: $scope.newPerson.name, city: $scope.newPerson.city});
 	};
 });
 	
