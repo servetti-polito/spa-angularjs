@@ -4,12 +4,9 @@
 	<title>Angular-js data binding</title>
 </head>
 <body>
-	<div class="container"
-	data-ng-init="persons = [ 
-		{name: 'Barbara', city: 'Cuneo'},
-		{name: 'Antonio', city: 'Torino'},
-		{name: 'Cristina', city: 'Milano'} ]">
-	<h3>Loop through names with ng-repeat</h3>
+    <!-- was data-ng-model="customer ..." -->
+	<div class="container" data-ng-controller="SimpleController">
+	<h3>Loop through the model supplied by the controller in the scope with ng-repeat</h3>
 	Filter by:
 	<input type="text" data-ng-model="searchText"/>
 	<ul>
@@ -19,6 +16,16 @@
 	</ul>
 	{{names | json}}
 	</div>
-<script type="text/javascript" src="angular.min.js"></script>
+<script>
+// dependency injection
+function SimpleController($scope) {
+	$scope.persons = [
+		{name: 'Barbara', city: 'Cuneo'},
+		{name: 'Antonio', city: 'Torino'},
+		{name: 'Cristina', city: 'Milano'}	
+	];
+}
+</script>
+	<script type="text/javascript" src="angular.min.js"></script>
 </body>
 </html>
