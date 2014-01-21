@@ -5,10 +5,10 @@
 </head>
 <body>
 	<div class="container"
-	data-ng-init="names=['Antonio','Barbara','Cristina']">
-	<h3>Loop through names with ng-repeat</h3>
+	data-ng-init="names=['Barbara','Antonio','Cristina']">
+	<h3>Loop threough names with ng-repeat</h3>
 	<ul>
-	<li data-ng-repeat="name in names">{{name}}</li>
+	<li data-ng-repeat="name in names | orderBy:'toString()'">{{name | uppercase}}</li>
 	</ul>
 	{{names | json}}
 	</div>
