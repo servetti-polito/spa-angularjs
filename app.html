@@ -14,8 +14,9 @@
 	<div data-ng-view=""></div>
 	<script type="text/javascript" src="angular.js"></script>
 	<script type="text/javascript" src="angular-route.js"></script>
+	<script type="text/javascript" src="angular-resource.js"></script>
 <script>
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngResource']);
 
 myApp.config( ['$routeProvider',
 	function ($routeProvider) {
@@ -26,35 +27,36 @@ myApp.config( ['$routeProvider',
 		.otherwise( { redirectTo: '/viewA' });
 }]);
 
-myApp.factory( 'simpleFactory', function () {
-	var persons = [
+myApp.factory( 'simpleFactory', function ($resource) {
+	
+	return $resource('/persons');
+	/* [
 		{name: 'Barbara', city: 'Cuneo'},
 		{name: 'Antonio', city: 'Torino'},
 		{name: 'Cristina', city: 'Milano'}	
 	];
-	
-	var factory = {};
-	factory.getPersons = function () { return persons; }
-	factory.postPerson = function (p) { persons.push(p); }
-	
-	// return the factory !
-	return factory;
+	*/
+
 });
 
 // dependence injection, just put the name of the factory
 myApp.controller('SimpleController', function ($scope, simpleFactory) {
 	$scope.persons = [];
 	
-	init();
-	// private function
-	function init() {
+	(function init() {
 		// data
-		$scope.persons = simpleFactory.getPersons();
-	};
+		console.log('Initializing persons in the scope');
+		$scope.persons = simpleFactory.query();		// it is now a resource
+	})();
 	
 	// behaviour
 	$scope.addPerson = function () {
 		simpleFactory.postPerson({ name: $scope.newPerson.name, city: $scope.newPerson.city});
+	};
+	
+	$scope.curerson = function (p) {
+		console.log('curPerson');
+		$scope.selPerson = p;
 	};
 });
 	
