@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html data-ng-app="myApp">
 <head>
-	<title>Angular-js data binding</title>
+	<title>Angular-js demo application</title>
 </head>
 <body>
-    <!-- was data-ng-model="customer ..." -->
-	<div class="container" data-ng-controller="SimpleController">
-	<h3>Loop through the model supplied by the controller in the scope with ng-repeat</h3>
-	Filter by:
-	<input type="text" data-ng-model="searchText"/>
-	<ul>
-	<li data-ng-repeat="person in persons | filter:searchText | orderBy:'name'">
-		{{person.name}} - {{person.city | uppercase}}
-	</li>
-	</ul>
-	{{names | json}}
-	</div>
-
-	<script type="text/javascript" src="angular.min.js"></script>
+	<!-- ng-view handles loading partials into it based 
+             upon routes -->
+	<div data-ng-view=""></div>
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript" src="angular-route.js"></script>
 <script>
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngRoute']);
+
+myApp.config( ['$routeProvider',
+	function ($routeProvider) {
+	$routeProvider
+		.when('/', { controller: 'SimpleController', templateUrl: 'viewA7.html'})
+		.when('/viewB', { controller: 'SimpleController', templateUrl: 'viewB7.html'})
+		.otherwise( { redirectTo: '/' });
+}]);
+
 myApp.controller('SimpleController', function ($scope) {
 	$scope.persons = [
 		{name: 'Barbara', city: 'Cuneo'},
@@ -27,5 +27,6 @@ myApp.controller('SimpleController', function ($scope) {
 		{name: 'Cristina', city: 'Milano'}	
 	];
 });
+	
 </script></body>
 </html>
