@@ -10,6 +10,7 @@
 	<li><a href="#/viewA">View A</a></li>
 	<li><a href="#/viewB">View B</a></li>
 	<li><a href="#/add">Add View</a></li>
+	<li><a href="#/edit">Edit View</a></li>
 	</ul>
 	<div data-ng-view=""></div>
 	<script type="text/javascript" src="angular.js"></script>
@@ -23,19 +24,14 @@ myApp.config( ['$routeProvider',
 	$routeProvider
 		.when('/viewA', { controller: 'SimpleController', templateUrl: 'viewA7.html'})
 		.when('/add', { controller: 'SimpleController', templateUrl: 'add8.html'})
+		.when('/edit', { controller: 'SimpleController', templateUrl: 'edit10.html'})
 		.when('/viewB', { controller: 'SimpleController', templateUrl: 'viewB7.html'})
 		.otherwise( { redirectTo: '/viewA' });
 }]);
 
 myApp.factory( 'simpleFactory', function ($resource) {
 	
-	return $resource('/persons');
-	/* [
-		{name: 'Barbara', city: 'Cuneo'},
-		{name: 'Antonio', city: 'Torino'},
-		{name: 'Cristina', city: 'Milano'}	
-	];
-	*/
+	return $resource('/persons/:personId');
 
 });
 
@@ -54,10 +50,12 @@ myApp.controller('SimpleController', function ($scope, simpleFactory) {
 		simpleFactory.postPerson({ name: $scope.newPerson.name, city: $scope.newPerson.city});
 	};
 	
-	$scope.curerson = function (p) {
-		console.log('curPerson');
-		$scope.selPerson = p;
+	$scope.curPerson = function(id) {
+		$scope.selPerson = simpleFactory.get({personId: id}); 
+		// alert('selPerson:' + id);
+		//$scope.selPerson = 
 	};
+
 });
 	
 </script></body>
