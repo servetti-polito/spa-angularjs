@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="">
+<html data-ng-app="myApp">
 <head>
 	<title>Angular-js data binding</title>
 </head>
@@ -16,16 +16,16 @@
 	</ul>
 	{{names | json}}
 	</div>
+
+	<script type="text/javascript" src="angular.min.js"></script>
 <script>
-// dependency injection
-function SimpleController($scope) {
+var myApp = angular.module('myApp', []);
+myApp.controller('SimpleController', function ($scope) {
 	$scope.persons = [
 		{name: 'Barbara', city: 'Cuneo'},
 		{name: 'Antonio', city: 'Torino'},
 		{name: 'Cristina', city: 'Milano'}	
 	];
-}
-</script>
-	<script type="text/javascript" src="angular.min.js"></script>
-</body>
+});
+</script></body>
 </html>
