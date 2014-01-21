@@ -4,9 +4,14 @@
 	<title>Angular-js data binding</title>
 </head>
 <body>
-	Name:
-	<br />
-	<input type="text" data-ng-model="name" /> {{ name }}
+	<div class="container"
+	data-ng-init="names=['Antonio','Barbara','Cristina']">
+	<h3>Loop through names with ng-repeat</h3>
+	<ul>
+	<li data-ng-repeat="name in names">{{name}}</li>
+	</ul>
+	{{names | json}}
+	</div>
 <script type="text/javascript" src="angular.min.js"></script>
 </body>
 </html>
